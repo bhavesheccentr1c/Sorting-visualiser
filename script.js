@@ -1,4 +1,4 @@
-const n = 20;
+const n = 50;
 const array=[];
 
 init();
@@ -28,7 +28,8 @@ function playNote(freq){
     osc.connect(node);
     node.connect(audioCtx.destination);
 }
-
+const btn1 = document.getElementById("init");
+const btn2 = document.getElementById("play");
 function init(){
     for(let i=0;i<n;i++){
     array[i] = Math.random();
@@ -37,16 +38,21 @@ showBars();
 }
 
 
+
 function play(){
+    btn1.disabled = true;
+    btn2.disabled = true;
     const copy=[...array];
     const moves = bubbleSort(copy);
     animate(moves);
     
+ 
 }
 
 
 function animate(moves){
     if(moves.length==0){
+        enableBtn();
         showBars();
         return;
     }
@@ -61,12 +67,18 @@ function animate(moves){
     showBars(move);
     setTimeout(function(){
         animate(moves);
-    },50)
+    },10)
+    
 }
 
+function enableBtn(){
+        btn2.disabled = false;
+        btn1.disabled = false;
+    }
 
 function bubbleSort(array){
     const moves=[];
+    
     do{
     var swapped = false;
     for(let i=1;i<array.length;i++){
